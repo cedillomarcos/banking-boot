@@ -1,8 +1,10 @@
 package com.bankexample.banking.application.rest;
 
+import com.bankexample.banking.application.exceptions.NoSuchElementFoundException;
+import com.bankexample.banking.application.rest.request.UserRequest;
+import com.bankexample.banking.domain.WalletService;
 import com.bankexample.banking.mapper.UserMapper;
-import com.bankexample.banking.application.request.UserRequestDto;
-import com.bankexample.banking.application.response.EntityIdResponseDTO;
+import com.bankexample.banking.application.rest.response.EntityIdResponse;
 import com.bankexample.banking.domain.UserService;
 import com.bankexample.banking.domain.users.data.User;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
@@ -13,6 +15,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -20,34 +25,61 @@ import java.util.UUID;
 @OpenAPIDefinition
 @RestController
 @RequestMapping("/api/management")
+@RequiredArgsConstructor
 public class ManagementController {
 
     private UserService userService;
+    private WalletService walletService;
 
-    public ManagementController(UserService userService){
+    public ManagementController(UserService userService, WalletService walletService) {
         this.userService = userService;
+        this.walletService = walletService;
     }
 
     @Operation(summary = "Create a wallet for a exist user")
-    @PostMapping("/user/{id}/wallet")
-    public EntityIdResponseDTO wallet(@Parameter(description = "UUID of the user") @Valid @PathVariable UUID id){
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Wallet created for the user"),
+            @ApiResponse(responseCode = "409", description = "Payload invalid",
+                    content = @Content(mediaType = "application/json",
+                                schema = @Schema(implementation = EntityIdResponse.class))
+                        )})
+    @PostMapping("/user/{uuid}/wallet")
+    public EntityIdResponse wallet(@Parameter(description = "UUID of the user") @Valid @PathVariable UUID uuid){
 
-        return null;
+        User user = userService.getUser(uuid);
+        if ( user == null ){
+            throw new NoSuchElementFoundException("User not found");
+        }
+        UUID uuidwallet = walletService.create(user);
+        return new EntityIdResponse(uuidwallet);
     }
 
     @Operation(summary = "Create a new user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "202", description = "User created",
+            @ApiResponse(responseCode = "201", description = "User created",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = UserRequestDto.class)) }),
+                            schema = @Schema(implementation = UserRequest.class)) }),
             @ApiResponse(responseCode = "409", description = "Payload invalid",
-                    content = @Content)})
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = EntityIdResponse.class))
+            )})
     @PostMapping("/user")
-    public EntityIdResponseDTO user(@Valid @RequestBody UserRequestDto userdto){
+    public EntityIdResponse user(@Valid @RequestBody UserRequest userdto){
 
         User userdata = UserMapper.INSTANCE.userRequestToUser(userdto);
-        userService.create(userdata);
+        UUID uuid = userService.create(userdata);
 
-        return null;
+        return new EntityIdResponse(uuid);
+    }
+
+
+    @ExceptionHandler(NoSuchElementFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<String> handleNoSuchElementFoundException(
+            NoSuchElementFoundException exception
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(exception.getMessage());
     }
 }

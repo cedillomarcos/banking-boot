@@ -8,7 +8,7 @@ public interface UserService {
 
     User getUser(UUID uuid);
 
-    User create(User user);
+    UUID create(User user);
 
     boolean exist(UUID uuid);
 }

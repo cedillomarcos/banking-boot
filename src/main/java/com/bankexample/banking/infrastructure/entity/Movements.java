@@ -23,7 +23,6 @@ public class Movements {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private UUID movementId;
     private UUID walletId;
     private BigDecimal amount;

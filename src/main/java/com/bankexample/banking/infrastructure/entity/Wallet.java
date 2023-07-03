@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-@Entity(name="wallet")
+@Entity(name="wallets")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

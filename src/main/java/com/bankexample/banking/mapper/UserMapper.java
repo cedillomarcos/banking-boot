@@ -1,6 +1,6 @@
 package com.bankexample.banking.mapper;
 
-import com.bankexample.banking.application.request.UserRequestDto;
+import com.bankexample.banking.application.rest.request.UserRequest;
 import com.bankexample.banking.domain.users.data.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -10,7 +10,7 @@ public interface UserMapper {
 
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    User userRequestToUser(UserRequestDto user);
+    User userRequestToUser(UserRequest user);
 
     com.bankexample.banking.infrastructure.entity.User userDomainToEntity(com.bankexample.banking.domain.users.data.User user);
 }

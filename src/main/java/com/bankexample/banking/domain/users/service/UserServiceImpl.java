@@ -24,14 +24,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public com.bankexample.banking.domain.users.data.User create(com.bankexample.banking.domain.users.data.User user) {
+    public UUID create(com.bankexample.banking.domain.users.data.User user) {
 
         Optional<User> userentity = userRepository.findByLogin(user.getLogin());
         if ( userentity.isEmpty() ){
             User userToSave = UserMapper.INSTANCE.userDomainToEntity(user);
             userToSave.setUserId(UUID.randomUUID());
             userToSave = userRepository.save(userToSave);
-
+            return userToSave.getUserId();
         }
         return null;
     }

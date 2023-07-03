@@ -1,9 +1,8 @@
 package com.bankexample.banking.application.rest;
 
-import com.bankexample.banking.application.request.AuthRequest;
-import com.bankexample.banking.application.response.TokenDto;
+import com.bankexample.banking.application.rest.request.AuthRequest;
+import com.bankexample.banking.application.rest.response.JWTDataToken;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.validation.annotation.Validated;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
     @PostMapping("login")
-    public ResponseEntity<TokenDto> login(@RequestBody @Validated AuthRequest request){
+    public ResponseEntity<JWTDataToken> login(@RequestBody @Validated AuthRequest request){
 /*        try{
             return null;
 

@@ -10,5 +10,4 @@ public interface UserService {
 
     UUID create(User user);
 
-    boolean exist(UUID uuid);
 }

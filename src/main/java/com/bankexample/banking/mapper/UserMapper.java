@@ -12,5 +12,7 @@ public interface UserMapper {
 
     User userRequestToUser(UserRequest user);
 
-    com.bankexample.banking.infrastructure.entity.User userDomainToEntity(com.bankexample.banking.domain.users.data.User user);
+    com.bankexample.banking.infrastructure.entity.User userDomainToEntity(User user);
+
+    User entityToDomain(com.bankexample.banking.infrastructure.entity.User user);
 }

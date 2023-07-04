@@ -25,7 +25,6 @@ import java.util.UUID;
 @OpenAPIDefinition
 @RestController
 @RequestMapping("/api/management")
-@RequiredArgsConstructor
 public class ManagementController {
 
     private UserService userService;
@@ -44,6 +43,7 @@ public class ManagementController {
                                 schema = @Schema(implementation = EntityIdResponse.class))
                         )})
     @PostMapping("/user/{uuid}/wallet")
+    @ResponseStatus(HttpStatus.CREATED)
     public EntityIdResponse wallet(@Parameter(description = "UUID of the user") @Valid @PathVariable UUID uuid){
 
         User user = userService.getUser(uuid);
@@ -64,6 +64,7 @@ public class ManagementController {
                             schema = @Schema(implementation = EntityIdResponse.class))
             )})
     @PostMapping("/user")
+    @ResponseStatus(HttpStatus.CREATED)
     public EntityIdResponse user(@Valid @RequestBody UserRequest userdto){
 
         User userdata = UserMapper.INSTANCE.userRequestToUser(userdto);

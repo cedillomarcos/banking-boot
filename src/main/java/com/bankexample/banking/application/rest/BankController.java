@@ -27,16 +27,6 @@ public class BankController {
         this.walletService = walletService;
     }
 
-    @GetMapping("/me")
-    public ResponseEntity<WalletResponse> getMe(){
-        return null;
-    }
-
-    @GetMapping
-    public ResponseEntity<WalletResponse> get(){
-        return null;
-    }
-
     @PostMapping("/{id}/deposit")
     public ResponseEntity<String> deposit(@Valid @PathVariable UUID walletId,
                                           @RequestBody @Valid MovementRequest movement){

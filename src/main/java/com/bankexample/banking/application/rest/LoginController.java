@@ -18,12 +18,6 @@ public class LoginController {
 
     @PostMapping("login")
     public ResponseEntity<JWTDataToken> login(@RequestBody @Validated AuthRequest request){
-/*        try{
-            return null;
-
-        } catch (BadCredentialsException ex) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }*/
         return null;
     }
 }

@@ -8,8 +8,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
@@ -29,9 +31,8 @@ public class User {
     private String surname;
     private String login;
     private String password;
-
-    private ZonedDateTime birthDate;
     private Boolean active;
 
-    private Timestamp createAt;
+    @CreationTimestamp
+    private LocalTime createAt;
 }

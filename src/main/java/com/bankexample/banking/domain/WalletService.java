@@ -10,6 +10,10 @@ public interface WalletService {
 
     UUID create(User user);
 
+    Wallet get(UUID uuid);
+
     UUID operation(Wallet wallet, BigDecimal amount);
+
+    UUID transfer(Wallet walletOrig, Wallet walletDest, BigDecimal amount);
 
 }

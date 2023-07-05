@@ -1,0 +1,37 @@
+{
+  "accountId": "5e5a0f42-3183-433c-adc8-13feea969db0",
+  "user": {
+    "userId": "5e5a0f42-3183-433c-adc8-13feea969db0",
+    "name": "Marcos",
+    "surname": "Martinez"
+  },
+  "balance": 1200,
+  "currency": "BKP",
+  "movements": [
+    {
+      "type": "IN",
+      "amount": 1000,
+      "currency": "BKP"
+    },
+    {
+      "type": "IN",
+      "amount": 1200,
+      "currency": "BKP"
+    },
+    {
+      "type": "IN",
+      "amount": 100,
+      "currency": "BKP"
+    },
+    {
+      "type": "OUT",
+      "amount": -100,
+      "currency": "BKP"
+    },
+    {
+      "type": "OUT",
+      "amount": -1000,
+      "currency": "BKP"
+    }
+  ]
+}

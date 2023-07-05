@@ -21,4 +21,5 @@ public class MovementsResponse {
     private BigDecimal amount;
     private OffsetDateTime createdAt;
     private String currency;
+
 }

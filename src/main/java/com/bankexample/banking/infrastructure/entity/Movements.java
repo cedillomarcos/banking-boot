@@ -1,16 +1,15 @@
 package com.bankexample.banking.infrastructure.entity;
 
 import com.bankexample.banking.domain.wallet.data.MovementType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Entity(name="movements")
@@ -29,4 +28,6 @@ public class Movements {
     private MovementType type;
     private String currency;
 
+    @CreationTimestamp
+    private LocalTime createAt;
 }

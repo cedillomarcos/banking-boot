@@ -12,7 +12,9 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MovementRequest {
+
     private BigDecimal amount;
     private String currency;
     private Operation operation;
+
 }

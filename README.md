@@ -8,7 +8,6 @@ An example of the use of some design concerns to "simulate" a bank
 
 Technology:
 - Spring Boot
-- Spring Security
 - Spring MVC
 - Spring Data
 - Spring Rest

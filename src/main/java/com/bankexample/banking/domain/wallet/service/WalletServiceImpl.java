@@ -57,12 +57,13 @@ public class WalletServiceImpl implements WalletService {
     }
 
     @Override
-    public UUID operation(Wallet wallet, BigDecimal amount) {
+    public UUID operation(final Wallet wallet, BigDecimal amount) {
         Wallet walletdto = walletPersistence.findByAccountId(wallet.getAccountId());
 
         if (walletdto != null){
             UUID uuidmov = movementsPersistence.addMovement(walletdto.getAccountId(), amount, "BKP");
-            walletPersistence.updateBalance(walletdto.getAccountId(), amount);
+            wallet.setBalance(wallet.getBalance().add(amount));
+            walletPersistence.updateBalance(wallet, amount);
             return uuidmov;
         }
         return null;

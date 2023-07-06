@@ -14,5 +14,5 @@ public interface WalletPersistence {
 
     Wallet findByAccountId(UUID walletUUID);
 
-    Wallet updateBalance(UUID walletUUID, BigDecimal amount);
+    Wallet updateBalance(Wallet wallet, BigDecimal amount);
 }

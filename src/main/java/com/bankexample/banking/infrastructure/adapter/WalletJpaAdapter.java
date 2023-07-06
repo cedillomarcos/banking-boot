@@ -38,10 +38,10 @@ public class WalletJpaAdapter implements WalletPersistence {
     }
 
     @Override
-    public Wallet updateBalance(UUID walletUUID, BigDecimal amount) {
-        com.bankexample.banking.infrastructure.entity.Wallet wallet = walletRepository.findByAccountId(walletUUID);
-        wallet.setBalance(wallet.getBalance().add(amount));
-        walletRepository.save(wallet);
-        return WalletMapper.INSTANCE.walletToDomain(wallet);
+    public Wallet updateBalance(Wallet wallet, BigDecimal amount) {
+        com.bankexample.banking.infrastructure.entity.Wallet walletentity = walletRepository.findByAccountId(wallet.getAccountId());
+        walletentity.setBalance(wallet.getBalance().add(amount));
+        walletRepository.save(walletentity);
+        return WalletMapper.INSTANCE.walletToDomain(walletentity);
     }
 }

@@ -1,7 +1,7 @@
 package com.bankexample.banking.domain;
 
-import com.bankexample.banking.infrastructure.entity.User;
-import com.bankexample.banking.infrastructure.repository.UserRepository;
+import com.bankexample.banking.domain.users.data.User;
+import com.bankexample.banking.domain.users.port.UsersPersistence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +19,7 @@ import java.util.UUID;
 public class UsersServiceDomainTest {
 
     @MockBean
-    UserRepository userRepository;
+    UsersPersistence usersPersistence;
 
     @Autowired
     UserService userService;
@@ -31,7 +31,7 @@ public class UsersServiceDomainTest {
                         .surname("Martinez")
                         .build();
 
-        Mockito.when(userRepository.findByUserId(user.getUserId()))
+        Mockito.when(usersPersistence.findByUserId(user.getUserId()))
                 .thenReturn(user);
     }
 

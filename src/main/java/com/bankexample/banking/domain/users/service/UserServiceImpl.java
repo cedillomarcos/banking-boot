@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
         if ( userf != null )
             throw new ConflictAlreadyExistsException("User yet exist");
 
-        return usersPersistence.addUser(userf);
+        return usersPersistence.addUser(user);
     }
 
 }

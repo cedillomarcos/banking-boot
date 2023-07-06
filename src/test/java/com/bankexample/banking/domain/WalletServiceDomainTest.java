@@ -1,6 +1,7 @@
 package com.bankexample.banking.domain;
 
 import com.bankexample.banking.domain.wallet.data.Wallet;
+import com.bankexample.banking.domain.wallet.port.WalletPersistence;
 import com.bankexample.banking.infrastructure.repository.UserRepository;
 import com.bankexample.banking.infrastructure.repository.WalletRepository;
 import org.junit.jupiter.api.Assertions;
@@ -22,42 +23,51 @@ import java.util.UUID;
 public class WalletServiceDomainTest {
 
     @MockBean
-    WalletRepository walletRepository;
+    WalletPersistence walletPersistence;
 
     @Autowired
     WalletService walletService;
 
-/*
-UUID operation(Wallet wallet, BigDecimal amount);
+    Wallet wallet;
+    Wallet walletA;
 
-    UUID transfer(Wallet walletOrig, Wallet walletDest, BigDecimal amount);
-
- */
     @BeforeEach
     void setUp() throws Exception {
-        com.bankexample.banking.infrastructure.entity.Wallet wallet = com.bankexample.banking.infrastructure.entity.Wallet.builder()
-                .accountId(UUID.randomUUID())
+        UUID randomaccount = UUID.randomUUID();
+        wallet = Wallet.builder()
+                .accountId(randomaccount)
                 .balance(new BigDecimal(0))
                 .build();
 
-        Mockito.when(walletRepository.save(Mockito.any()))
-                .thenReturn(UUID.randomUUID());
+        walletA = Wallet.builder()
+                .accountId(UUID.randomUUID())
+                .balance(new BigDecimal(3000))
+                .build();
 
-        Mockito.when(walletRepository.findByAccountId(Mockito.any())).thenReturn(wallet);
+        Mockito.when(walletPersistence.addWallet(Mockito.any()))
+                .thenReturn(wallet.getAccountId());
+
+        Mockito.when(walletPersistence.findByAccountId(wallet.getAccountId())).thenReturn(wallet);
+        Mockito.when(walletPersistence.findByAccountId(walletA.getAccountId())).thenReturn(walletA);
     }
 
 
     @Test
     public void user_do_deposit_created_expected_ok() throws Exception {
-        //movementsRepository
-
-        Wallet wallet = Wallet.builder()
-                            .accountId(UUID.randomUUID())
-                            .balance(new BigDecimal(0))
-                            .build();
-
        UUID uuid =  walletService.operation( wallet, new BigDecimal(1000) );
        Assertions.assertNotNull(uuid);
+       Assertions.assertEquals(new BigDecimal(1000), wallet.getBalance());
+    }
+
+    @Test
+    public void user_do_transfer_created_expected_ok() throws Exception {
+
+        wallet.setBalance(new BigDecimal(0));
+        UUID uuid =  walletService.transfer( walletA, wallet, new BigDecimal(2000) );
+        Assertions.assertNotNull(uuid);
+        Assertions.assertEquals(new BigDecimal(2000), wallet.getBalance());
+
+
     }
 
 

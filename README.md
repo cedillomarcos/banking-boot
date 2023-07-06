@@ -35,6 +35,13 @@ To run, first build then
 ?> java -jar target/banking-0.0.1-SNAPSHOT.jar
 ```
 
+### Tests
+Test are in the folder src/test can be executed with
+```shell
+?> mvn package test
+```
+
+
 ### H2 UI Console access
 It's posible to access a h2 console to show records in a database
 ```

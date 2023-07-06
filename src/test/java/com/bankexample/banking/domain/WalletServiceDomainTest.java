@@ -61,13 +61,17 @@ public class WalletServiceDomainTest {
 
     @Test
     public void user_do_transfer_created_expected_ok() throws Exception {
-
         wallet.setBalance(new BigDecimal(0));
         UUID uuid =  walletService.transfer( walletA, wallet, new BigDecimal(2000) );
         Assertions.assertNotNull(uuid);
         Assertions.assertEquals(new BigDecimal(2000), wallet.getBalance());
+    }
 
-
+    @Test
+    public void user_do_transfer_origin_less_amount_than_required_expected_null() throws Exception {
+        wallet.setBalance(new BigDecimal(0));
+        UUID uuid =  walletService.transfer( walletA, wallet, new BigDecimal(20000) );
+        Assertions.assertNull(uuid);
     }
 
 
